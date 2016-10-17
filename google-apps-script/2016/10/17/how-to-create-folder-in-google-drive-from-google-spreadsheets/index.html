@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-<title>Welcome to Spress</title>
+<title>How to create folder in Google Drive from Google Spreadsheets</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="A site creted by Spress">
 <meta name="author" content="Your Name">
@@ -10,15 +10,15 @@
 
             <meta name="twitter:card" content="summary">
         <meta name="twitter:image" content="/assets/img/spresso-logo.png">
-    <meta name="twitter:title" content="Welcome to Spress">
+    <meta name="twitter:title" content="How to create folder in Google Drive from Google Spreadsheets">
     <meta name="twitter:description" content="A site creted by Spress">
     <meta name="twitter:creator" content="@spress_cms">
 
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Welcome to Spress">
+<meta property="og:title" content="How to create folder in Google Drive from Google Spreadsheets">
 <meta property="og:description" content="A site creted by Spress">
-<meta property="og:url" content="/2015/07/26/welcome-to-spress">
+<meta property="og:url" content="/google-apps-script/2016/10/17/how-to-create-folder-in-google-drive-from-google-spreadsheets">
 <meta property="og:site_name" content="Welcome to Spress">
 
 <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="Welcome to Spress Feed">
@@ -66,35 +66,93 @@
                 <article class="post">
     <header>
         <h1>
-            <a href="/2015/07/26/welcome-to-spress">Welcome to Spress</a>
+            <a href="/google-apps-script/2016/10/17/how-to-create-folder-in-google-drive-from-google-spreadsheets">How to create folder in Google Drive from Google Spreadsheets</a>
         </h1>
     </header>
     
-    <p>To create a new post, simply runs <code>spress new:post</code> command or adds a file
-in the <code>./src/content/posts</code> folder that follows the convention <code>YYYY-MM-DD-name-of-post.md</code>.</p>
+    <p>Just use this class to create folder in Google Drive. It will create one if child folder with the same name is not exists.</p>
 
-<p>More information about Spress:</p>
+<p>Example use in function <code>testRun()</code>. You can paste it into your Google Spreadsheet scripts.</p>
 
-<ul>
-<li><a href="http://spress.yosymfony.com">Spress</a></li>
-<li><a href="http://github.com/spress">Github</a></li>
-</ul>
+<pre><code>var settings = {
+    rootFolderId: '0B6nU2EHhqW32EHhqW30zZ2xtYzA',
+};
 
-<p><a href="https://gitter.im/spress/Spress?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge"><img src="https://badges.gitter.im/Join%20Chat.svg" alt="Gitter" /></a></p>
+function testRun() {
+    Logger.log(DriveManager.createFolderIfNotExists(settings.rootFolderId, 'Temp name 1'));
+    Logger.log(DriveManager.createFolderIfNotExists(settings.rootFolderId, 'Temp name 2'));
+    Logger.log(DriveManager.createFolderIfNotExists(settings.rootFolderId, 'Temp name 1'));
+}
+
+/*
+ * Class for working with Google Drive folder
+ * (c) Solokhin Ilia
+ * solohin.i@gmail.com
+ * http://data5.pro
+ * https://www.upwork.com/freelancers/~0110e79b44736be7ab
+ */
+var DriveManager = function () {
+    var module = {
+        createFolderIfNotExists: function (parentIdOrFolder, newFolderName) {
+            return module.createFolder(parentIdOrFolder, newFolderName, true);
+        },
+        createFolder: function (parentIdOrFolder, newFolderName, onlyIfNotExists) {
+            if (onlyIfNotExists === undefined) {
+                onlyIfNotExists = true;
+            }
+
+            var parent = module.getFolder(parentIdOrFolder);
+            if (onlyIfNotExists &amp;&amp; module.isFolderExists(settings.rootFolderId, newFolderName)) {
+                Logger.log('Folder %s exists!', newFolderName);
+                return false;
+            }
+
+            var newFolder = DriveApp.createFolder(newFolderName);
+            parent.addFolder(newFolder);
+
+            return newFolder;
+        },
+        isFolderExists: function (parentIdOrFolder, searchFolderName) {
+            var parent = module.getFolder(parentIdOrFolder);
+            var children = parent.getFoldersByName(searchFolderName);
+            return children.hasNext();
+        },
+        getFolder: function (parentIdOrFolder, throwException) {
+            if (throwException === undefined) {
+                throwException = true;
+            }
+
+            //In case if we have ID instead of Folder object
+            if (typeof parentIdOrFolder == 'string') {
+                parentIdOrFolder = DriveApp.getFolderById(parentIdOrFolder);
+            }
+            //Check if it is Folder
+            if (!parentIdOrFolder || typeof parentIdOrFolder.getFiles != 'function' &amp;&amp; throwException) {
+                throw ("Wrong parent folder ID or not a folder object " + parentIdOrFolder);
+            }
+            return parentIdOrFolder;
+        }
+    };
+
+    return {
+        createFolderIfNotExists: module.createFolderIfNotExists,
+        isFolderExists: module.isFolderExists,
+    };
+}();
+</code></pre>
 
     
             <footer>    
             <p>
-            	Posted by Your Name on <time pubdate="pubdate">2015-07-26</time>
+            	Posted by Your Name on <time pubdate="pubdate">2016-10-17</time>
             </p>
 
                         <ul class="list-unstyled">
-                                    <li>
-                        <i class="fa fa-tags"></i>
-                                                    <a href="/tags/sample-post">sample post</a>, 
-                                                    <a href="/tags/posts">posts</a> 
+                                                    <li>
+                        <i class="fa fa-folder"></i>
+                                                    <a href="/categories/google-apps-script">google apps script</a> 
                                             </li>
-                                            </ul>
+                            </ul>
                     </footer>
 
             </article>

@@ -66,125 +66,171 @@
                             <article class="post">
     <header>
         <h1>
-            <a href="/2015/07/26/welcome-to-spress">Welcome to Spress</a>
+            <a href="/google-apps-script/2016/10/17/how-to-create-folder-in-google-drive-from-google-spreadsheets">How to create folder in Google Drive from Google Spreadsheets</a>
         </h1>
     </header>
     
-    <p>To create a new post, simply runs <code>spress new:post</code> command or adds a file
-in the <code>./src/content/posts</code> folder that follows the convention <code>YYYY-MM-DD-name-of-post.md</code>.</p>
+    <p>Just use this class to create folder in Google Drive. It will create one if child folder with the same name is not exists.</p>
 
-<p>More information about Spress:</p>
+<p>Example use in function <code>testRun()</code>. You can paste it into your Google Spreadsheet scripts.</p>
 
-<ul>
-<li><a href="http://spress.yosymfony.com">Spress</a></li>
-<li><a href="http://github.com/spress">Github</a></li>
-</ul>
+<pre><code>var settings = {
+    rootFolderId: '0B6nU2EHhqW32EHhqW30zZ2xtYzA',
+};
 
-<p><a href="https://gitter.im/spress/Spress?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge"><img src="https://badges.gitter.im/Join%20Chat.svg" alt="Gitter" /></a></p>
+function testRun() {
+    Logger.log(DriveManager.createFolderIfNotExists(settings.rootFolderId, 'Temp name 1'));
+    Logger.log(DriveManager.createFolderIfNotExists(settings.rootFolderId, 'Temp name 2'));
+    Logger.log(DriveManager.createFolderIfNotExists(settings.rootFolderId, 'Temp name 1'));
+}
+
+/*
+ * Class for working with Google Drive folder
+ * (c) Solokhin Ilia
+ * solohin.i@gmail.com
+ * http://data5.pro
+ * https://www.upwork.com/freelancers/~0110e79b44736be7ab
+ */
+var DriveManager = function () {
+    var module = {
+        createFolderIfNotExists: function (parentIdOrFolder, newFolderName) {
+            return module.createFolder(parentIdOrFolder, newFolderName, true);
+        },
+        createFolder: function (parentIdOrFolder, newFolderName, onlyIfNotExists) {
+            if (onlyIfNotExists === undefined) {
+                onlyIfNotExists = true;
+            }
+
+            var parent = module.getFolder(parentIdOrFolder);
+            if (onlyIfNotExists &amp;&amp; module.isFolderExists(settings.rootFolderId, newFolderName)) {
+                Logger.log('Folder %s exists!', newFolderName);
+                return false;
+            }
+
+            var newFolder = DriveApp.createFolder(newFolderName);
+            parent.addFolder(newFolder);
+
+            return newFolder;
+        },
+        isFolderExists: function (parentIdOrFolder, searchFolderName) {
+            var parent = module.getFolder(parentIdOrFolder);
+            var children = parent.getFoldersByName(searchFolderName);
+            return children.hasNext();
+        },
+        getFolder: function (parentIdOrFolder, throwException) {
+            if (throwException === undefined) {
+                throwException = true;
+            }
+
+            //In case if we have ID instead of Folder object
+            if (typeof parentIdOrFolder == 'string') {
+                parentIdOrFolder = DriveApp.getFolderById(parentIdOrFolder);
+            }
+            //Check if it is Folder
+            if (!parentIdOrFolder || typeof parentIdOrFolder.getFiles != 'function' &amp;&amp; throwException) {
+                throw ("Wrong parent folder ID or not a folder object " + parentIdOrFolder);
+            }
+            return parentIdOrFolder;
+        }
+    };
+
+    return {
+        createFolderIfNotExists: module.createFolderIfNotExists,
+        isFolderExists: module.isFolderExists,
+    };
+}();
+</code></pre>
 
     
     </article>
             <article class="post">
     <header>
         <h1>
-            <a href="/articles/2014/01/18/sample-post">Sample Post</a>
+            <a href="/google-apps-script/2016/10/16/soap-api-calls-from-google-apps-script">SOAP API calls from Google apps script</a>
         </h1>
     </header>
     
-    <p>Below is just about everything you'll need to style in the theme. Check the source code to see the many embedded elements within paragraphs.</p>
+    <p>SOAP and WSDL components are deprecated in google apps script. So you have to use plain XML.
+There is the SOAP 1.1 example code writen in google apps script.</p>
 
-<h1>Heading 1</h1>
+<pre><code>function testSOAP() {
+    var method = 'GetWeather';
+    var params = {
+        CityName: 'SanFrancisco',
+        CountryName: 'USA'
+    };
 
-<h2>Heading 2</h2>
+    var envelopeNS = XmlService.getNamespace('SOAP', 'http://schemas.xmlsoap.org/soap/envelope/');
+    var envelope = XmlService.createElement('Envelope', envelopeNS);
+    var body = XmlService.createElement('Body', envelopeNS);
+    envelope.addContent(body);
+    var action = XmlService.createElement(method);
+    body.addContent(action);
 
-<h3>Heading 3</h3>
+    //Now XML is
+    //&lt;SOAP:Envelope xmlns:SOAP="http://schemas.xmlsoap.org/soap/envelope/"&gt;
+    //  &lt;SOAP:Body&gt;
+    //    &lt;GetWeather /&gt;
+    //  &lt;/SOAP:Body&gt;
+    //&lt;/SOAP:Envelope&gt;
 
-<h4>Heading 4</h4>
+    //Set params
+    for (var key in params) {
+        var paramElement = XmlService.createElement(key);
+        if (typeof params[key] == 'object') {
+            for (var innerKey in params[key]) {
+                paramElement.addContent(XmlService.createElement(innerKey).setText(params[key][innerKey]));
+            }
+        } else {
+            paramElement.setText(params[key])
+        }
+        action.addContent(paramElement);
+    }
 
-<h5>Heading 5</h5>
+    //Now XML is
+    //&lt;SOAP:Envelope xmlns:SOAP="http://schemas.xmlsoap.org/soap/envelope/"&gt;
+    //  &lt;SOAP:Body&gt;
+    //    &lt;GetWeather&gt;
+    //      &lt;CityName&gt;SanFrancisco&lt;/CityName&gt;
+    //      &lt;CountryName&gt;USA&lt;/CountryName&gt;
+    //    &lt;/GetWeather&gt;
+    //  &lt;/SOAP:Body&gt;
+    //&lt;/SOAP:Envelope&gt;
 
-<h6>Heading 6</h6>
+    //Create element
+    var document = XmlService.createDocument(envelope);
+    var xml = XmlService.getPrettyFormat().format(document);
 
-<h3>Body text</h3>
+    //Request options
+    var options = {
+        "method": "post",
+        "payload": xml,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {
+            "SOAPAction": "http://www.webserviceX.NET/" + method,
+        }    
+    };
 
-<p>Lorem ipsum dolor sit amet, test link adipiscing elit. <strong>This is strong</strong>. Nullam dignissim convallis est. Quisque aliquam.</p>
+    //Get response
+    var responseXml = UrlFetchApp.fetch("http://some/url/api", options).getContentText();
+    Logger.log(responseXml);
+    var responseDoc = XmlService.parse(responseXml);
+    var responseBody = responseDoc.getRootElement().getChild('Body', envelopeNS).getChild(method + 'Response', envelopeNS);
 
-<p><em>This is emphasized</em>. Donec faucibus. Nunc iaculis suscipit dui. 53 = 125. Water is H<sub>2</sub>O. Nam sit amet sem. Aliquam libero nisi, imperdiet at, tincidunt nec, gravida vehicula, nisl. The New York Times <cite>(That’s a citation)</cite>. <u>Underline</u>. Maecenas ornare tortor. Donec sed tellus eget sapien fringilla nonummy. Mauris a ante. Suspendisse quam sem, consequat at, commodo vitae, feugiat in, nunc. Morbi imperdiet augue quis tellus.</p>
-
-<p>HTML and <abbr title="cascading stylesheets">CSS</abbr> are our tools. Mauris a ante. Suspendisse quam sem, consequat at, commodo vitae, feugiat in, nunc. Morbi imperdiet augue quis tellus. Praesent mattis, massa quis luctus fermentum, turpis mi volutpat justo, eu volutpat enim diam eget metus.</p>
-
-<h3>Blockquotes</h3>
-
-<blockquote>
-  <p>Lorem ipsum dolor sit amet, test link adipiscing elit. Nullam dignissim convallis est. Quisque aliquam.</p>
-</blockquote>
-
-<h2>List Types</h2>
-
-<h3>Ordered Lists</h3>
-
-<ol>
-<li>Item one
-
-<ol>
-<li>sub item one</li>
-<li>sub item two</li>
-<li>sub item three</li>
-</ol></li>
-<li>Item two</li>
-</ol>
-
-<h3>Unordered Lists</h3>
-
-<ul>
-<li>Item one</li>
-<li>Item two</li>
-<li>Item three</li>
-</ul>
-
-<h2>Tables</h2>
-
-<table>
-<thead>
-<tr>
-  <th>Tables</th>
-  <th align="center">Are</th>
-  <th align="right">Cool</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td>col 3 is</td>
-  <td align="center">right-aligned</td>
-  <td align="right">$1600</td>
-</tr>
-<tr>
-  <td>col 2 is</td>
-  <td align="center">centered</td>
-  <td align="right">$12</td>
-</tr>
-<tr>
-  <td>zebra stripes</td>
-  <td align="center">are neat</td>
-  <td align="right">$1</td>
-</tr>
-</tbody>
-</table>
-
-<h2>Code Snippets</h2>
-
-<p>Syntax highlighting via <a href="http://highlightjs.org/">Highlight.js</a>:</p>
-
-<pre><code>&lt;div id="awesome"&gt;
-    &lt;p&gt;This is great isn't it?&lt;/p&gt;
-&lt;/div&gt;
+    //Parse response 
+    var result = {};
+    var children = responseBody.getChildren();
+    for (var i = 0; i &lt; children.length; i++) {
+        var child = children[i];
+        var name = child.getName();
+        var value = child.getValue();
+        result[name] = value;
+    }
+    return result;
+}
 </code></pre>
 
-<h2>Buttons</h2>
-
-<p>Make any link standout more when applying the <code>.btn</code> and <code>.btn-default</code> classes.</p>
-
-<div><a href="#" class="btn btn-default">This is a button</a></div>
+<p>It is actual at least for google drive spreadsheets and docs.</p>
 
     
     </article>

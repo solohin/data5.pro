@@ -2,23 +2,23 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-<title>Sample Post</title>
+<title>SOAP API calls from Google apps script</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Just about everything you'll need to style in the theme">
+<meta name="description" content="A site creted by Spress">
 <meta name="author" content="Your Name">
 <meta name="generator" content="Spress v2.1.3">
 
             <meta name="twitter:card" content="summary">
         <meta name="twitter:image" content="/assets/img/spresso-logo.png">
-    <meta name="twitter:title" content="Sample Post">
-    <meta name="twitter:description" content="Just about everything you'll need to style in the theme">
+    <meta name="twitter:title" content="SOAP API calls from Google apps script">
+    <meta name="twitter:description" content="A site creted by Spress">
     <meta name="twitter:creator" content="@spress_cms">
 
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Sample Post">
-<meta property="og:description" content="Just about everything you'll need to style in the theme">
-<meta property="og:url" content="/articles/2014/01/18/sample-post">
+<meta property="og:title" content="SOAP API calls from Google apps script">
+<meta property="og:description" content="A site creted by Spress">
+<meta property="og:url" content="/google-apps-script/2016/10/16/soap-api-calls-from-google-apps-script">
 <meta property="og:site_name" content="Welcome to Spress">
 
 <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="Welcome to Spress Feed">
@@ -66,120 +66,102 @@
                 <article class="post">
     <header>
         <h1>
-            <a href="/articles/2014/01/18/sample-post">Sample Post</a>
+            <a href="/google-apps-script/2016/10/16/soap-api-calls-from-google-apps-script">SOAP API calls from Google apps script</a>
         </h1>
     </header>
     
-    <p>Below is just about everything you'll need to style in the theme. Check the source code to see the many embedded elements within paragraphs.</p>
+    <p>SOAP and WSDL components are deprecated in google apps script. So you have to use plain XML.
+There is the SOAP 1.1 example code writen in google apps script.</p>
 
-<h1>Heading 1</h1>
+<pre><code>function testSOAP() {
+    var method = 'GetWeather';
+    var params = {
+        CityName: 'SanFrancisco',
+        CountryName: 'USA'
+    };
 
-<h2>Heading 2</h2>
+    var envelopeNS = XmlService.getNamespace('SOAP', 'http://schemas.xmlsoap.org/soap/envelope/');
+    var envelope = XmlService.createElement('Envelope', envelopeNS);
+    var body = XmlService.createElement('Body', envelopeNS);
+    envelope.addContent(body);
+    var action = XmlService.createElement(method);
+    body.addContent(action);
 
-<h3>Heading 3</h3>
+    //Now XML is
+    //&lt;SOAP:Envelope xmlns:SOAP="http://schemas.xmlsoap.org/soap/envelope/"&gt;
+    //  &lt;SOAP:Body&gt;
+    //    &lt;GetWeather /&gt;
+    //  &lt;/SOAP:Body&gt;
+    //&lt;/SOAP:Envelope&gt;
 
-<h4>Heading 4</h4>
+    //Set params
+    for (var key in params) {
+        var paramElement = XmlService.createElement(key);
+        if (typeof params[key] == 'object') {
+            for (var innerKey in params[key]) {
+                paramElement.addContent(XmlService.createElement(innerKey).setText(params[key][innerKey]));
+            }
+        } else {
+            paramElement.setText(params[key])
+        }
+        action.addContent(paramElement);
+    }
 
-<h5>Heading 5</h5>
+    //Now XML is
+    //&lt;SOAP:Envelope xmlns:SOAP="http://schemas.xmlsoap.org/soap/envelope/"&gt;
+    //  &lt;SOAP:Body&gt;
+    //    &lt;GetWeather&gt;
+    //      &lt;CityName&gt;SanFrancisco&lt;/CityName&gt;
+    //      &lt;CountryName&gt;USA&lt;/CountryName&gt;
+    //    &lt;/GetWeather&gt;
+    //  &lt;/SOAP:Body&gt;
+    //&lt;/SOAP:Envelope&gt;
 
-<h6>Heading 6</h6>
+    //Create element
+    var document = XmlService.createDocument(envelope);
+    var xml = XmlService.getPrettyFormat().format(document);
 
-<h3>Body text</h3>
+    //Request options
+    var options = {
+        "method": "post",
+        "payload": xml,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {
+            "SOAPAction": "http://www.webserviceX.NET/" + method,
+        }    
+    };
 
-<p>Lorem ipsum dolor sit amet, test link adipiscing elit. <strong>This is strong</strong>. Nullam dignissim convallis est. Quisque aliquam.</p>
+    //Get response
+    var responseXml = UrlFetchApp.fetch("http://some/url/api", options).getContentText();
+    Logger.log(responseXml);
+    var responseDoc = XmlService.parse(responseXml);
+    var responseBody = responseDoc.getRootElement().getChild('Body', envelopeNS).getChild(method + 'Response', envelopeNS);
 
-<p><em>This is emphasized</em>. Donec faucibus. Nunc iaculis suscipit dui. 53 = 125. Water is H<sub>2</sub>O. Nam sit amet sem. Aliquam libero nisi, imperdiet at, tincidunt nec, gravida vehicula, nisl. The New York Times <cite>(That’s a citation)</cite>. <u>Underline</u>. Maecenas ornare tortor. Donec sed tellus eget sapien fringilla nonummy. Mauris a ante. Suspendisse quam sem, consequat at, commodo vitae, feugiat in, nunc. Morbi imperdiet augue quis tellus.</p>
-
-<p>HTML and <abbr title="cascading stylesheets">CSS</abbr> are our tools. Mauris a ante. Suspendisse quam sem, consequat at, commodo vitae, feugiat in, nunc. Morbi imperdiet augue quis tellus. Praesent mattis, massa quis luctus fermentum, turpis mi volutpat justo, eu volutpat enim diam eget metus.</p>
-
-<h3>Blockquotes</h3>
-
-<blockquote>
-  <p>Lorem ipsum dolor sit amet, test link adipiscing elit. Nullam dignissim convallis est. Quisque aliquam.</p>
-</blockquote>
-
-<h2>List Types</h2>
-
-<h3>Ordered Lists</h3>
-
-<ol>
-<li>Item one
-
-<ol>
-<li>sub item one</li>
-<li>sub item two</li>
-<li>sub item three</li>
-</ol></li>
-<li>Item two</li>
-</ol>
-
-<h3>Unordered Lists</h3>
-
-<ul>
-<li>Item one</li>
-<li>Item two</li>
-<li>Item three</li>
-</ul>
-
-<h2>Tables</h2>
-
-<table>
-<thead>
-<tr>
-  <th>Tables</th>
-  <th align="center">Are</th>
-  <th align="right">Cool</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td>col 3 is</td>
-  <td align="center">right-aligned</td>
-  <td align="right">$1600</td>
-</tr>
-<tr>
-  <td>col 2 is</td>
-  <td align="center">centered</td>
-  <td align="right">$12</td>
-</tr>
-<tr>
-  <td>zebra stripes</td>
-  <td align="center">are neat</td>
-  <td align="right">$1</td>
-</tr>
-</tbody>
-</table>
-
-<h2>Code Snippets</h2>
-
-<p>Syntax highlighting via <a href="http://highlightjs.org/">Highlight.js</a>:</p>
-
-<pre><code>&lt;div id="awesome"&gt;
-    &lt;p&gt;This is great isn't it?&lt;/p&gt;
-&lt;/div&gt;
+    //Parse response 
+    var result = {};
+    var children = responseBody.getChildren();
+    for (var i = 0; i &lt; children.length; i++) {
+        var child = children[i];
+        var name = child.getName();
+        var value = child.getValue();
+        result[name] = value;
+    }
+    return result;
+}
 </code></pre>
 
-<h2>Buttons</h2>
-
-<p>Make any link standout more when applying the <code>.btn</code> and <code>.btn-default</code> classes.</p>
-
-<div><a href="#" class="btn btn-default">This is a button</a></div>
+<p>It is actual at least for google drive spreadsheets and docs.</p>
 
     
             <footer>    
             <p>
-            	Posted by Your Name on <time pubdate="pubdate">2014-01-18</time>
+            	Posted by Your Name on <time pubdate="pubdate">2016-10-16</time>
             </p>
 
                         <ul class="list-unstyled">
-                                    <li>
-                        <i class="fa fa-tags"></i>
-                                                    <a href="/tags/sample-post">sample post</a>, 
-                                                    <a href="/tags/posts">posts</a> 
-                                            </li>
                                                     <li>
                         <i class="fa fa-folder"></i>
-                                                    <a href="/categories/articles">articles</a> 
+                                                    <a href="/categories/google-apps-script">google apps script</a> 
                                             </li>
                             </ul>
                     </footer>

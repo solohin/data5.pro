@@ -4,14 +4,14 @@
         <loc></loc>
     </url>
             <url>
-            <loc>/articles/2014/01/18/sample-post</loc>
-            <lastmod>2014-01-18</lastmod>
+            <loc>/google-apps-script/2016/10/16/soap-api-calls-from-google-apps-script</loc>
+            <lastmod>2016-10-16</lastmod>
             <changefreq>monthly</changefreq>
             <priority>0.5</priority>
         </url>
             <url>
-            <loc>/2015/07/26/welcome-to-spress</loc>
-            <lastmod>2015-07-26</lastmod>
+            <loc>/google-apps-script/2016/10/17/how-to-create-folder-in-google-drive-from-google-spreadsheets</loc>
+            <lastmod>2016-10-17</lastmod>
             <changefreq>monthly</changefreq>
             <priority>0.5</priority>
         </url>
