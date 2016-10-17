@@ -29,5 +29,5 @@ echo "#####################################";
 
 cd /Users/solohin/Sites/data5_github;
 
-/usr/bin/open -a "/Applications/Google Chrome.app" 'https://data5.pro/';
 /usr/bin/open -a "/Applications/Google Chrome.app" 'https://github.com/solohin/data5.pro/settings/';
+/usr/bin/open -a "/Applications/Google Chrome.app" 'https://data5.pro/';
