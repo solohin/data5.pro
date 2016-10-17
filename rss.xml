@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>Welcome to Spress</title>
-        <link></link>
-        <description>RSS feed for Welcome to Spress</description>
-        <atom:link href="/rss.xml" rel="self" type="application/rss+xml" />
+        <title>DATA5 | Elijah Solokhin</title>
+        <link>https://data5.pro</link>
+        <description>RSS feed for DATA5 | Elijah Solokhin</description>
+        <atom:link href="https://data5.pro/rss.xml" rel="self" type="application/rss+xml" />
                     <item>
                 <title>SOAP API calls from Google apps script</title>
                 <description><![CDATA[<p>SOAP and WSDL components are deprecated in google apps script. So you have to use plain XML.
@@ -89,9 +89,9 @@ There is the SOAP 1.1 example code writen in google apps script.</p>
 
 <p>It is actual at least for google drive spreadsheets and docs.</p>
 ]]></description>
-                <link>/google-apps-script/2016/10/16/soap-api-calls-from-google-apps-script</link>
+                <link>https://data5.pro/google-apps-script/2016/10/16/soap-api-calls-from-google-apps-script</link>
                 <pubDate>Sun, 16 Oct 2016 00:00:00 +0000</pubDate>
-                <guid>/google-apps-script/2016/10/16/soap-api-calls-from-google-apps-script</guid>
+                <guid>https://data5.pro/google-apps-script/2016/10/16/soap-api-calls-from-google-apps-script</guid>
             </item>
                     <item>
                 <title>How to create folder in Google Drive from Google Spreadsheets</title>
@@ -166,9 +166,9 @@ var DriveManager = function () {
 }();
 </code></pre>
 ]]></description>
-                <link>/google-apps-script/2016/10/17/how-to-create-folder-in-google-drive-from-google-spreadsheets</link>
+                <link>https://data5.pro/google-apps-script/2016/10/17/how-to-create-folder-in-google-drive-from-google-spreadsheets</link>
                 <pubDate>Mon, 17 Oct 2016 00:00:00 +0000</pubDate>
-                <guid>/google-apps-script/2016/10/17/how-to-create-folder-in-google-drive-from-google-spreadsheets</guid>
+                <guid>https://data5.pro/google-apps-script/2016/10/17/how-to-create-folder-in-google-drive-from-google-spreadsheets</guid>
             </item>
             </channel>
 </rss>

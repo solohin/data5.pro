@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-        <loc></loc>
+        <loc>https://data5.pro</loc>
     </url>
             <url>
-            <loc>/google-apps-script/2016/10/16/soap-api-calls-from-google-apps-script</loc>
+            <loc>https://data5.pro/google-apps-script/2016/10/16/soap-api-calls-from-google-apps-script</loc>
             <lastmod>2016-10-16</lastmod>
             <changefreq>monthly</changefreq>
             <priority>0.5</priority>
         </url>
             <url>
-            <loc>/google-apps-script/2016/10/17/how-to-create-folder-in-google-drive-from-google-spreadsheets</loc>
+            <loc>https://data5.pro/google-apps-script/2016/10/17/how-to-create-folder-in-google-drive-from-google-spreadsheets</loc>
             <lastmod>2016-10-17</lastmod>
             <changefreq>monthly</changefreq>
             <priority>0.5</priority>
