@@ -1,9 +1,9 @@
-title: "Welcome to Spress"
-description: "A site creted by Spress"
+title: "DATA5 | Elijah Solokhin"
+description: "CRM, Google Apps, PHP, JS developer"
 logo: "spresso-logo.png"
 
 # Your site's domain. E.g: http://yoursite.com
-url: ""
+url: "https://data5.pro"
 
 parsedown_actived: true
 
@@ -14,14 +14,14 @@ comments:
 
 # Information about author
 author:
-    name: "Your Name"
+    name: "Elijah Solokhin"
 
     # Social networks
-    twitter: "spress_cms"
-    github: "https://github.com/spress/Spress"
+    twitter:
+    github: "https://github.com/solohin"
     bitbucket:
-    facebook:
-    linkedin:
+    facebook: "https://www.facebook.com/solohin.i"
+    linkedin: "https://www.linkedin.com/in/elijah-solokhin-5a6026a5"
     gplus:
     youtube:
 
@@ -51,8 +51,8 @@ bing_verify:
 
 # Page menus
 top_menu:
-    - { name: Home, url: "/" }
-    - { name: Projects, url: "/projects" }
+    - { name: "Google apps script", url: "/categories/google-apps-script/" }
+#    - { name: Projects, url: "/projects" }
 
 bottom_menu:
-    - { name: "Go to Spresso theme web", url: "https://github.com/yosymfony/Spress-theme-spresso" }
+#    - { name: "Go to Spresso theme web", url: "https://github.com/yosymfony/Spress-theme-spresso" }
