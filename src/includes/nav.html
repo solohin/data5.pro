@@ -1,18 +1,11 @@
-<div class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <div class="navbar-brand">
-            <a class="label label-primary" href="/">{{ site.title }}</a>
-        </div>
-      </div>
-      <div class="collapse navbar-collapse">
-        {% include 'menu.html' with { menu: site.top_menu, ul_style: 'nav navbar-nav' } %}
-      </div><!--/.nav-collapse -->
+<div class="head">
+    <div class="head__left">
+        <img src="/assets/img/logo90.jpg" alt="{{ site.title }}" class="head__logo">
+    </div>
+    <div class="head__right">
+        <a class="head__title" href="/">{{ site.title }}</a>
+        <div class="head__descr">{{ site.description1 }}</div>
+        <div class="head__descr">{{ site.description2 }}</div>
     </div>
 </div>
+{% include 'menu.html' with { menu: site.top_menu, ul_style: '' } %}

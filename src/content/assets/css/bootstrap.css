@@ -1323,7 +1323,7 @@ html {
 
 body {
     font-family: Georgia, "Times New Roman", Times, serif;
-    font-size: 17px;
+    font-size: 16px;
     line-height: 1.42857143;
     color: #333
 }
@@ -1410,9 +1410,9 @@ hr {
 
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
     font-family: 'Open Sans', "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 1.1;
-    color: inherit
+    color: #000
 }
 
 .h1 .small, .h1 small, .h2 .small, .h2 small, .h3 .small, .h3 small, .h4 .small, .h4 small, .h5 .small, .h5 small, .h6 .small, .h6 small, h1 .small, h1 small, h2 .small, h2 small, h3 .small, h3 small, h4 .small, h4 small, h5 .small, h5 small, h6 .small, h6 small {
@@ -1440,15 +1440,15 @@ hr {
 }
 
 .h1, h1 {
-    font-size: 61px
+    font-size: 41px
 }
 
 .h2, h2 {
-    font-size: 44px
+    font-size: 34px
 }
 
 .h3, h3 {
-    font-size: 38px
+    font-size: 28px
 }
 
 .h4, h4 {

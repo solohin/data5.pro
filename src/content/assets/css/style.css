@@ -6,7 +6,7 @@ body {
 .spresso-wrap {
     max-width: 1024px;
     min-height: 100%;
-    padding: 60px 15px 0;
+    padding: 30px 15px 0;
 }
 
 #footer {
@@ -62,3 +62,32 @@ code {
     padding: 20px 12px;
 }
 /* /Posts list */
+
+
+/* head */
+
+.head{
+    overflow: hidden;
+    font-family: 'Open Sans', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #000;
+    padding-bottom: 20px;
+}
+.head__logo{
+    border-radius: 50%;
+    width: 90px;
+    height: 90px;
+    margin-top: 15px;
+}
+.head__left{
+    width: 120px;
+    float: left;
+}
+.head__title{
+    color: inherit;
+    font-size: 40px;
+    font-weight: 600;
+}
+.head__descr{
+    color: inherit;
+    font-size: 20px;
+}

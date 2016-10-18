@@ -1,5 +1,7 @@
-title: "DATA5 | Elijah Solokhin"
-description: "CRM, Google Apps, PHP, JS developer"
+title: "Elijah Solokhin"
+description: "CRM and bussiness automation developer | PHP, JavaScript, Google Apps Script"
+description1: "CRM and bussiness automation developer"
+description2: "PHP, JavaScript, Google Apps Script"
 logo: "spresso-logo.png"
 
 # Your site's domain. E.g: http://yoursite.com
@@ -10,7 +12,7 @@ parsedown_actived: true
 # Comments in posts
 comments:
     enabled: false
-    disqus_shortname: ""
+    disqus_shortname: solohin
 
 # Information about author
 author:
