@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>DATA5 | Elijah Solokhin</title>
+        <title>Elijah Solokhin</title>
         <link>https://data5.pro</link>
-        <description>RSS feed for DATA5 | Elijah Solokhin</description>
+        <description>RSS feed for Elijah Solokhin</description>
         <atom:link href="https://data5.pro/rss.xml" rel="self" type="application/rss+xml" />
                     <item>
                 <title>SOAP API calls from Google apps script</title>
