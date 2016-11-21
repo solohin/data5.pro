@@ -1,18 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    <url>
-        <loc>https://data5.pro</loc>
-    </url>
-            <url>
-            <loc>https://data5.pro/google-apps-script/2016/10/16/soap-api-calls-from-google-apps-script</loc>
-            <lastmod>2016-10-16</lastmod>
-            <changefreq>monthly</changefreq>
-            <priority>0.5</priority>
-        </url>
-            <url>
-            <loc>https://data5.pro/google-apps-script/2016/10/17/how-to-create-folder-in-google-drive-from-google-spreadsheets</loc>
-            <lastmod>2016-10-17</lastmod>
-            <changefreq>monthly</changefreq>
-            <priority>0.5</priority>
-        </url>
-    </urlset>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+	<url>
+		<loc>http://xn----9sbcmvhcsfh8bzdzb.xn--p1ai/</loc>
+		<lastmod>2016-11-19T13:11:32+00:00</lastmod>
+	</url>
+	<url>
+		<loc>http://xn----9sbcmvhcsfh8bzdzb.xn--p1ai/solokhin</loc>
+		<lastmod>2016-11-21T13:08:20+00:00</lastmod>
+	</url>
+</urlset>
